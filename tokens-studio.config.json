@@ -1,0 +1,17 @@
+{
+  "$schema": "https://tokens.studio/schemas/config.json",
+  "$description": "Tokens Studio config (repo artifact). Tokens Studio does not auto-consume this file; manual plugin setup required. See docs/TOKENS-STUDIO-SETUP.md",
+  "source": ["src/**/*.json"],
+  "platforms": {
+    "figma": {
+      "transformGroup": "tokens-studio",
+      "buildPath": "dist/figma/",
+      "files": [
+        {
+          "destination": "tokens.json",
+          "format": "tokens-studio/figma"
+        }
+      ]
+    }
+  }
+}

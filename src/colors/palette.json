@@ -1,0 +1,286 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Raw color palette (basePalette) for MojaUI. Canonical source of truth.",
+  "palette": {
+    "transparent": {
+      "$type": "color",
+      "$value": "rgba(0,0,0,0)"
+    },
+    "neutralWhite": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "neutralWhiteAlpha100": {
+      "$type": "color",
+      "$value": "rgba(255,255,255,0.3)"
+    },
+    "neutralWhiteAlpha200": {
+      "$type": "color",
+      "$value": "rgba(255,255,255,0.6)"
+    },
+    "neutralWhiteAlpha300": {
+      "$type": "color",
+      "$value": "rgba(255,255,255,0.75)"
+    },
+    "neutralBlack": {
+      "$type": "color",
+      "$value": "#101114"
+    },
+    "neutralBlackAbsolute": {
+      "$type": "color",
+      "$value": "#000000"
+    },
+    "neutralBlackAlpha100": {
+      "$type": "color",
+      "$value": "rgba(0,0,0,0.3)"
+    },
+    "neutralBlackAlpha200": {
+      "$type": "color",
+      "$value": "rgba(0,0,0,0.6)"
+    },
+    "neutralBlackAlpha300": {
+      "$type": "color",
+      "$value": "rgba(0,0,0,0.75)"
+    },
+    "hoverPrimaryLight": {
+      "$type": "color",
+      "$value": "rgba(3, 84, 166, 0.05)"
+    },
+    "hoverPrimaryDark": {
+      "$type": "color",
+      "$value": "rgba(94, 174, 255, 0.08)"
+    },
+    "hoverDangerLight": {
+      "$type": "color",
+      "$value": "rgba(187, 37, 26, 0.05)"
+    },
+    "hoverDangerDark": {
+      "$type": "color",
+      "$value": "rgba(237, 125, 117, 0.08)"
+    },
+    "hoverGrayLight": {
+      "$type": "color",
+      "$value": "rgba(29, 31, 35, 0.05)"
+    },
+    "hoverGrayDark": {
+      "$type": "color",
+      "$value": "rgba(252, 252, 253, 0.08)"
+    },
+    "hoverWhiteLight": {
+      "$type": "color",
+      "$value": "rgba(255, 255, 255, 0.05)"
+    },
+    "hoverWhiteDark": {
+      "$type": "color",
+      "$value": "rgba(255, 255, 255, 0.08)"
+    },
+    "neutral50": {
+      "$type": "color",
+      "$value": "#FCFCFD"
+    },
+    "neutral100": {
+      "$type": "color",
+      "$value": "#F2F4F7"
+    },
+    "neutral200": {
+      "$type": "color",
+      "$value": "#E4E7EC"
+    },
+    "neutral300": {
+      "$type": "color",
+      "$value": "#D0D5DD"
+    },
+    "neutral400": {
+      "$type": "color",
+      "$value": "#8B939F"
+    },
+    "neutral500": {
+      "$type": "color",
+      "$value": "#6E7581"
+    },
+    "neutral600": {
+      "$type": "color",
+      "$value": "#40444D"
+    },
+    "neutral700": {
+      "$type": "color",
+      "$value": "#282B31"
+    },
+    "neutral800": {
+      "$type": "color",
+      "$value": "#1D1F23"
+    },
+    "neutral900": {
+      "$type": "color",
+      "$value": "#17181A"
+    },
+    "primary50": {
+      "$type": "color",
+      "$value": "#ECF4FC"
+    },
+    "primary100": {
+      "$type": "color",
+      "$value": "#D8E9F9"
+    },
+    "primary200": {
+      "$type": "color",
+      "$value": "#86C3F9"
+    },
+    "primary250": {
+      "$type": "color",
+      "$value": "#65ABF1"
+    },
+    "primary300": {
+      "$type": "color",
+      "$value": "#4B96E7"
+    },
+    "primary400": {
+      "$type": "color",
+      "$value": "#0354A6"
+    },
+    "primary500": {
+      "$type": "color",
+      "$value": "#064280"
+    },
+    "primary600": {
+      "$type": "color",
+      "$value": "#012242"
+    },
+    "primary700": {
+      "$type": "color",
+      "$value": "#011121"
+    },
+    "danger50": {
+      "$type": "color",
+      "$value": "#FEF3F2"
+    },
+    "danger100": {
+      "$type": "color",
+      "$value": "#FDE1E1"
+    },
+    "danger200": {
+      "$type": "color",
+      "$value": "#FCA5A5"
+    },
+    "danger300": {
+      "$type": "color",
+      "$value": "#ED7D75"
+    },
+    "danger400": {
+      "$type": "color",
+      "$value": "#BB251A"
+    },
+    "danger500": {
+      "$type": "color",
+      "$value": "#831A12"
+    },
+    "danger600": {
+      "$type": "color",
+      "$value": "#4B0F0A"
+    },
+    "danger700": {
+      "$type": "color",
+      "$value": "#250705"
+    },
+    "info50": {
+      "$type": "color",
+      "$value": "#EEF8FB"
+    },
+    "info100": {
+      "$type": "color",
+      "$value": "#DAF0F6"
+    },
+    "info200": {
+      "$type": "color",
+      "$value": "#7DD1E8"
+    },
+    "info300": {
+      "$type": "color",
+      "$value": "#2E9AB8"
+    },
+    "info400": {
+      "$type": "color",
+      "$value": "#0E7B9B"
+    },
+    "info500": {
+      "$type": "color",
+      "$value": "#0A5A70"
+    },
+    "info600": {
+      "$type": "color",
+      "$value": "#093F4E"
+    },
+    "info700": {
+      "$type": "color",
+      "$value": "#05252E"
+    },
+    "success50": {
+      "$type": "color",
+      "$value": "#EFFFF8"
+    },
+    "success100": {
+      "$type": "color",
+      "$value": "#D8F3E7"
+    },
+    "success200": {
+      "$type": "color",
+      "$value": "#79D7AC"
+    },
+    "success300": {
+      "$type": "color",
+      "$value": "#35AD77"
+    },
+    "success400": {
+      "$type": "color",
+      "$value": "#03834A"
+    },
+    "success500": {
+      "$type": "color",
+      "$value": "#045130"
+    },
+    "success600": {
+      "$type": "color",
+      "$value": "#012E19"
+    },
+    "success700": {
+      "$type": "color",
+      "$value": "#011E11"
+    },
+    "warning50": {
+      "$type": "color",
+      "$value": "#FFF9F4"
+    },
+    "warning100": {
+      "$type": "color",
+      "$value": "#FCECD9"
+    },
+    "warning200": {
+      "$type": "color",
+      "$value": "#FFC78F"
+    },
+    "warning300": {
+      "$type": "color",
+      "$value": "#E7954F"
+    },
+    "warning400": {
+      "$type": "color",
+      "$value": "#B45803"
+    },
+    "warning500": {
+      "$type": "color",
+      "$value": "#7E3E07"
+    },
+    "warning600": {
+      "$type": "color",
+      "$value": "#421F01"
+    },
+    "warning700": {
+      "$type": "color",
+      "$value": "#2C1501"
+    },
+    "cardOnSurface": {
+      "$type": "color",
+      "$value": "rgba(242, 244, 247, 0.07)"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@ojanti/mojaui-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Canonical design tokens for MojaUI (W3C DTCG format)",
+  "scripts": {
+    "build": "node scripts/validate-tokens.mjs && node scripts/generate-tamagui.mjs",
+    "validate": "node scripts/validate-tokens.mjs",
+    "codegen": "node scripts/generate-tamagui.mjs",
+    "extract": "node scripts/extract-tokens-to-dtcg.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

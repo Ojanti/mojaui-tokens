@@ -1,0 +1,12 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Z-index scale for MojaUI.",
+  "zIndex": {
+    "0": { "$type": "number", "$value": 0 },
+    "1": { "$type": "number", "$value": 100 },
+    "2": { "$type": "number", "$value": 200 },
+    "3": { "$type": "number", "$value": 300 },
+    "4": { "$type": "number", "$value": 400 },
+    "5": { "$type": "number", "$value": 500 }
+  }
+}
