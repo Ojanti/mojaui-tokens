@@ -54,17 +54,21 @@ function extractColorTheme(content) {
   return colorTheme
 }
 
+function dimensionValue(num) {
+  return { $type: 'dimension', $value: { value: parseInt(num, 10), unit: 'px' } }
+}
+
 function extractSpace(content) {
   const space = {}
-  const re = /\$(-?\d+):\s*(\d+)/g
+  const re = /\$(-?\d+):\s*(-?\d+)/g
   let m
   while ((m = re.exec(content)) !== null) {
     const key = m[1].startsWith('-') ? `$${m[1]}` : `$${m[1]}`
-    space[key] = { $type: 'dimension', $value: `${parseInt(m[2], 10)}px` }
+    space[key] = dimensionValue(m[2])
   }
   const trueRe = /\$true:\s*(\d+)/g
   while ((m = trueRe.exec(content)) !== null) {
-    if (!space.$true) space.$true = { $type: 'dimension', $value: `${m[1]}px` }
+    if (!space.$true) space.$true = dimensionValue(m[1])
   }
   return space
 }
@@ -79,7 +83,7 @@ function extractSize(content) {
   let m
   while ((m = re.exec(block)) !== null) {
     const key = m[1] === 'true' ? '$true' : `$${m[1]}`
-    size[key] = { $type: 'dimension', $value: `${m[2]}px` }
+    size[key] = dimensionValue(m[2])
   }
   return size
 }
@@ -90,14 +94,14 @@ function extractRadius(content) {
   let m
   while ((m = scaleRe.exec(content)) !== null) {
     const k = m[1].replace(/'/g, '')
-    radius[k] = { $type: 'dimension', $value: k === 'full' ? '9999px' : `${m[2]}px` }
+    radius[k] = dimensionValue(k === 'full' ? 9999 : m[2])
   }
   const inputRe = /input:\s*RADIUS_SCALE\.(\w+)/
   const inputMatch = content.match(inputRe)
   if (inputMatch && radius[inputMatch[1]]) {
     radius.input = { $type: 'dimension', $value: radius[inputMatch[1]].$value }
   } else if (!radius.input) {
-    radius.input = { $type: 'dimension', $value: '8px' }
+    radius.input = dimensionValue(8)
   }
   return radius
 }

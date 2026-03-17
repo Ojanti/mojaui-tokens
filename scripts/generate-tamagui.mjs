@@ -27,6 +27,16 @@ function loadJson(filePath) {
   return JSON.parse(readFileSync(filePath, 'utf-8'))
 }
 
+/** Extract numeric value in px from DTCG dimension { value, unit }. Supports px and rem (1rem=16px). */
+function dimensionToPx(val) {
+  if (typeof val !== 'object' || val === null || typeof val.value !== 'number') {
+    throw new Error(`Invalid dimension: expected { value: number, unit: "px"|"rem" }`)
+  }
+  if (val.unit === 'rem') return Math.round(val.value * 16)
+  if (val.unit === 'px') return val.value
+  throw new Error(`Invalid dimension unit: "${val.unit}" (expected "px" or "rem")`)
+}
+
 function resolveRef(ref, palette) {
   const m = ref.match(/^\{palette\.(\w+)\}$/)
   if (!m) return ref
@@ -48,16 +58,16 @@ function main() {
 
   const quoteKey = (k) => /^\d|[-.]/.test(k) ? `'${k}'` : k
   const spaceEntries = Object.entries(spacingData.space || {}).map(([k, v]) => {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
+    const num = dimensionToPx(v.$value)
     return [`  ${quoteKey(k)}: ${num},`]
   }).flat()
   const sizeEntries = Object.entries(spacingData.size || {}).map(([k, v]) => {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
+    const num = dimensionToPx(v.$value)
     return [`  ${quoteKey(k)}: ${num},`]
   }).flat()
 
   const radiusEntries = Object.entries(radiusData.radius || {}).map(([k, v]) => {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
+    const num = dimensionToPx(v.$value)
     const qk = /^\d|[-.]/.test(k) ? `'${k}'` : k
     return [`  ${qk}: ${num},`]
   }).flat()
@@ -82,18 +92,15 @@ function main() {
 
   const spaceObj = {}
   for (const [k, v] of Object.entries(spacingData.space || {})) {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
-    spaceObj[k] = num
+    spaceObj[k] = dimensionToPx(v.$value)
   }
   const sizeObj = {}
   for (const [k, v] of Object.entries(spacingData.size || {})) {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
-    sizeObj[k] = num
+    sizeObj[k] = dimensionToPx(v.$value)
   }
   const radiusObj = {}
   for (const [k, v] of Object.entries(radiusData.radius || {})) {
-    const num = parseInt(String(v.$value).replace(/px$/, ''), 10)
-    radiusObj[k] = num
+    radiusObj[k] = dimensionToPx(v.$value)
   }
   const zIndexObj = {}
   for (const [k, v] of Object.entries(zIndexData.zIndex || {})) {

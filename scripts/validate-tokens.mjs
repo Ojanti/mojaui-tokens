@@ -88,6 +88,23 @@ function validateTheme(colorTheme, palette) {
   }
 }
 
+/** DTCG dimension: { value: number, unit: "px" | "rem" } */
+function validateDimension(val, file, tokenPath) {
+  if (typeof val !== 'object' || val === null) {
+    errors.push(`${file}: token "${tokenPath}" must have $value as object { value, unit }`)
+    return null
+  }
+  if (typeof val.value !== 'number') {
+    errors.push(`${file}: token "${tokenPath}" $value.value must be a number`)
+    return null
+  }
+  if (val.unit !== 'px' && val.unit !== 'rem') {
+    errors.push(`${file}: token "${tokenPath}" $value.unit must be "px" or "rem"`)
+    return null
+  }
+  return val.value
+}
+
 function validateSpacing(spacing) {
   if (!spacing) return
   for (const group of ['space', 'size']) {
@@ -101,13 +118,8 @@ function validateSpacing(spacing) {
       if (v.$type !== 'dimension') {
         errors.push(`spacing.json: token "${k}" in ${group} must have $type: "dimension"`)
       }
-      const val = v.$value
-      if (typeof val !== 'string') {
-        errors.push(`spacing.json: token "${k}" in ${group} must have $value string`)
-        continue
-      }
-      const num = parseInt(val.replace(/px$/, ''), 10)
-      if (group === 'space' && !k.startsWith('$-') && num < 0) {
+      const num = validateDimension(v.$value, 'spacing.json', `${group}.${k}`)
+      if (num !== null && group === 'space' && !k.startsWith('$-') && num < 0) {
         errors.push(`spacing.json: positive space token "${k}" has negative value`)
       }
     }
@@ -124,17 +136,14 @@ function validateRadius(radius) {
     if (v.$type !== 'dimension') {
       errors.push(`radius.json: token "${k}" must have $type: "dimension"`)
     }
-    const val = v.$value
-    if (typeof val !== 'string') {
-      errors.push(`radius.json: token "${k}" must have $value string`)
-      continue
-    }
-    const num = parseInt(val.replace(/px$/, ''), 10)
-    if (num < 0) {
-      errors.push(`radius.json: token "${k}" has negative value`)
-    }
-    if (k !== 'full' && num > 100 && num !== 9999) {
-      errors.push(`radius.json: token "${k}" has unusually large value`)
+    const num = validateDimension(v.$value, 'radius.json', k)
+    if (num !== null) {
+      if (num < 0) {
+        errors.push(`radius.json: token "${k}" has negative value`)
+      }
+      if (k !== 'full' && num > 100 && num !== 9999) {
+        errors.push(`radius.json: token "${k}" has unusually large value`)
+      }
     }
   }
 }
