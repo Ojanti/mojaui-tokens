@@ -1,14 +1,16 @@
 {
   "name": "@ojanti/mojaui-tokens",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
-  "description": "Canonical design tokens for MojaUI (W3C DTCG format)",
+  "description": "Canonical design tokens for MojaUI in W3C DTCG format. Framework-agnostic source of truth for colors, typography, spacing, shadows, and more.",
+  "license": "CC-BY-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ojanti/mojaui-tokens.git"
+  },
   "scripts": {
-    "build": "node scripts/validate-tokens.mjs && node scripts/generate-tamagui.mjs",
-    "validate": "node scripts/validate-tokens.mjs",
-    "codegen": "node scripts/generate-tamagui.mjs",
-    "extract": "node scripts/extract-tokens-to-dtcg.mjs"
+    "build": "node scripts/validate-tokens.mjs",
+    "validate": "node scripts/validate-tokens.mjs"
   },
   "engines": {
     "node": ">=20"

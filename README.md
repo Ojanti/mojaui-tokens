@@ -1,39 +1,95 @@
 # @ojanti/mojaui-tokens
 
-Canonical design tokens for MojaUI in W3C DTCG format.
+Design tokens for MojaUI in [W3C DTCG format](https://design-tokens.github.io/community-group/format/). Framework-agnostic source of truth for colors, typography, spacing, shadows, and more.
 
-## Package Structure
+## What are design tokens?
+
+Design tokens are named design decisions—colors, spacing, typography, shadows—stored in a platform-agnostic format. They enable consistent styling across web, mobile, and other platforms. This repository provides the canonical token definitions in the W3C Design Tokens Community Group (DTCG) format, which is widely supported by tools like Style Dictionary, Tokens Studio, and custom pipelines.
+
+## Token categories
+
+| File | Purpose |
+|------|---------|
+| `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
+| `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
+| `src/typography.json` | Font families, sizes, line heights, weights, letter spacing, face mappings for heading and body |
+| `src/shadows.json` | Shadow definitions with web (box-shadow), iOS, and Android platform values |
+| `src/spacing.json` | Space and size scales |
+| `src/radius.json` | Border radius scale |
+| `src/borderWidth.json` | Border width scale |
+| `src/zIndex.json` | Z-index layers |
+
+## Format
+
+Tokens follow the W3C DTCG specification:
+
+- **`$type`** — Token type (`color`, `dimension`, `number`, `shadow`, `fontFamily`, etc.)
+- **`$value`** — The token value (string, number, or object depending on type)
+- **`$extensions`** — Optional platform-specific overrides (e.g. `mojaui.ios`, `mojaui.android` for shadows)
+
+Example:
+
+```json
+{
+  "palette": {
+    "brandPrimary": {
+      "$type": "color",
+      "$value": "#6C5CE7"
+    }
+  }
+}
+```
+
+## How to use
+
+Clone this repository and use the JSON files with any design token tooling:
+
+- **Style Dictionary** — Transform tokens to CSS variables, iOS/Android assets, etc.
+- **Tokens Studio** — Sync with Figma or other design tools
+- **Custom scripts** — Parse the JSON and generate outputs for your stack
+
+The tokens are framework-agnostic. You can build pipelines for React, Vue, React Native, Flutter, or plain CSS.
+
+## Validation
+
+Validate all token files:
+
+```bash
+node scripts/validate-tokens.mjs
+```
+
+Or with pnpm:
+
+```bash
+pnpm run validate
+```
+
+Validation checks schema compliance, reference resolution (e.g. `{palette.brandPrimary}`), naming conventions, and value ranges.
+
+## Structure
 
 ```
-packages/tokens/
-├── src/           # Canonical DTCG JSON (source of truth)
+├── src/
 │   ├── colors/
 │   │   ├── palette.json
 │   │   └── theme.json
+│   ├── typography.json
+│   ├── shadows.json
 │   ├── spacing.json
 │   ├── radius.json
-│   └── zIndex.json
+│   ├── zIndex.json
+│   └── borderWidth.json
 ├── scripts/
-│   ├── extract-tokens-to-dtcg.mjs
-│   ├── validate-tokens.mjs
-│   └── generate-tamagui.mjs
-└── dist/          # Future multi-platform outputs (scaffolding)
+│   └── validate-tokens.mjs
+├── package.json
+├── LICENSE
+└── README.md
 ```
 
-## Scripts
+## License
 
-- `pnpm run build` — Validate, then generate Tamagui files.
-- `pnpm run validate` — Validate token files only.
-- `pnpm run codegen` — Generate Tamagui files only (skips validation).
-- `pnpm run extract` — One-time extract from Tamagui source to DTCG JSON.
+[CC BY 4.0](LICENSE) — Creative Commons Attribution 4.0 International. You may use, share, and adapt these tokens with attribution.
 
-## Canonical Source Policy
+## MojaUI
 
-- `packages/tokens/src/**/*.json` is the **canonical persisted source of truth**.
-- Generated Tamagui files in `packages/mojaui-core/src/theme/generated/` are derived from canonical JSON.
-
-## Local Edit Warning Policy
-
-- Direct edits to generated Tamagui files are allowed for local experimentation.
-- Such edits are **non-canonical** and may be overwritten on next codegen.
-- To persist changes: edit canonical JSON and run `pnpm run build`.
+These tokens power the MojaUI design system. MojaUI consumes them via a Tamagui-specific codegen pipeline; this repository contains only the canonical source, so you can build your own pipelines for any framework.
