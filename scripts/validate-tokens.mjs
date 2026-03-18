@@ -164,6 +164,116 @@ function validateZIndex(zIndex) {
   }
 }
 
+function validateBorderWidth(borderWidth) {
+  if (!borderWidth || typeof borderWidth !== 'object') return
+  for (const [k, v] of Object.entries(borderWidth)) {
+    if (!v || typeof v !== 'object') {
+      errors.push(`borderWidth.json: invalid token "${k}"`)
+      continue
+    }
+    if (v.$type !== 'dimension') {
+      errors.push(`borderWidth.json: token "${k}" must have $type: "dimension"`)
+    }
+    const num = validateDimension(v.$value, 'borderWidth.json', k)
+    if (num !== null && num < 0) {
+      errors.push(`borderWidth.json: token "${k}" has negative value`)
+    }
+  }
+}
+
+function validateShadows(shadow) {
+  if (!shadow || typeof shadow !== 'object') return
+  const IOS_KEYS = ['shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius']
+  for (const [family, sizes] of Object.entries(shadow)) {
+    if (!sizes || typeof sizes !== 'object') {
+      errors.push(`shadows.json: invalid family "${family}"`)
+      continue
+    }
+    for (const [size, token] of Object.entries(sizes)) {
+      if (!token || typeof token !== 'object') {
+        errors.push(`shadows.json: invalid token "${family}.${size}"`)
+        continue
+      }
+      if (token.$type !== 'shadow') {
+        errors.push(`shadows.json: token "${family}.${size}" must have $type: "shadow"`)
+      }
+      if (typeof token.$value !== 'string' || !token.$value.trim()) {
+        errors.push(`shadows.json: token "${family}.${size}" must have non-empty $value string`)
+      }
+      const ext = token.$extensions
+      if (ext && typeof ext === 'object') {
+        const ios = ext['mojaui.ios']
+        if (ios && typeof ios === 'object') {
+          for (const key of IOS_KEYS) {
+            if (!(key in ios)) {
+              errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.ios missing "${key}"`)
+            }
+          }
+          if (ios.shadowOffset && (typeof ios.shadowOffset.width !== 'number' || typeof ios.shadowOffset.height !== 'number')) {
+            errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.ios.shadowOffset must have width and height numbers`)
+          }
+        }
+        const android = ext['mojaui.android']
+        if (android && typeof android === 'object') {
+          if (typeof android.elevation !== 'number' || android.elevation < 0) {
+            errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.android.elevation must be non-negative number`)
+          }
+        }
+      }
+    }
+  }
+}
+
+function validateTypography(typography) {
+  if (!typography || typeof typography !== 'object') return
+  for (const [role, def] of Object.entries(typography)) {
+    if (!def || typeof def !== 'object') {
+      errors.push(`typography.json: invalid role "${role}"`)
+      continue
+    }
+    for (const key of ['fontFamily', 'fontFamilyNative']) {
+      const t = def[key]
+      if (!t || typeof t !== 'object') continue
+      if (t.$type !== 'fontFamily') {
+        errors.push(`typography.json: ${role}.${key} must have $type: "fontFamily"`)
+      }
+      if (typeof t.$value !== 'string') {
+        errors.push(`typography.json: ${role}.${key} must have $value string`)
+      }
+    }
+    for (const group of ['size', 'lineHeight']) {
+      const obj = def[group]
+      if (!obj || typeof obj !== 'object') continue
+      for (const [k, v] of Object.entries(obj)) {
+        if (!v || typeof v !== 'object') {
+          errors.push(`typography.json: ${role}.${group}.${k} invalid`)
+          continue
+        }
+        if (v.$type !== 'dimension') {
+          errors.push(`typography.json: ${role}.${group}.${k} must have $type: "dimension"`)
+        }
+        validateDimension(v.$value, 'typography.json', `${role}.${group}.${k}`)
+      }
+    }
+    for (const group of ['weight', 'letterSpacing']) {
+      const obj = def[group]
+      if (!obj || typeof obj !== 'object') continue
+      for (const [k, v] of Object.entries(obj)) {
+        if (!v || typeof v !== 'object') {
+          errors.push(`typography.json: ${role}.${group}.${k} invalid`)
+          continue
+        }
+        if (v.$type !== 'number') {
+          errors.push(`typography.json: ${role}.${group}.${k} must have $type: "number"`)
+        }
+        if (typeof v.$value !== 'number') {
+          errors.push(`typography.json: ${role}.${group}.${k} must have $value number`)
+        }
+      }
+    }
+  }
+}
+
 function main() {
   const paletteData = loadJson(path.join(COLORS_SRC, 'palette.json'))
   const palette = paletteData?.palette
@@ -181,6 +291,15 @@ function main() {
 
   const zIndexData = loadJson(path.join(SRC, 'zIndex.json'))
   if (zIndexData) validateZIndex(zIndexData?.zIndex)
+
+  const borderWidthData = loadJson(path.join(SRC, 'borderWidth.json'))
+  if (borderWidthData) validateBorderWidth(borderWidthData?.borderWidth)
+
+  const typographyData = loadJson(path.join(SRC, 'typography.json'))
+  if (typographyData) validateTypography(typographyData?.typography)
+
+  const shadowData = loadJson(path.join(SRC, 'shadows.json'))
+  if (shadowData) validateShadows(shadowData?.shadow)
 
   if (errors.length > 0) {
     console.error('Validation failed:')

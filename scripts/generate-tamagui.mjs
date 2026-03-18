@@ -52,6 +52,9 @@ function main() {
   const spacingData = loadJson(path.join(SRC, 'spacing.json'))
   const radiusData = loadJson(path.join(SRC, 'radius.json'))
   const zIndexData = loadJson(path.join(SRC, 'zIndex.json'))
+  const borderWidthData = loadJson(path.join(SRC, 'borderWidth.json'))
+  const typographyData = loadJson(path.join(SRC, 'typography.json'))
+  const shadowData = loadJson(path.join(SRC, 'shadows.json'))
 
   const palette = paletteData.palette
   const colorTheme = themeData.colorTheme
@@ -107,6 +110,166 @@ function main() {
     zIndexObj[k] = v.$value
   }
 
+  const borderWidthObj = {}
+  for (const [k, v] of Object.entries(borderWidthData.borderWidth || {})) {
+    borderWidthObj[k] = dimensionToPx(v.$value)
+  }
+
+  const borderWidthEntries = Object.entries(borderWidthObj)
+    .map(([k, v]) => `  ${k}: ${v},`)
+    .join('\n')
+
+  // Typography: build font defs for createFont
+  const typo = typographyData?.typography || {}
+  const buildFontDef = (role) => {
+    const def = typo[role]
+    if (!def) return null
+    const quoteKey = (k) => /^\d|[-.]/.test(k) ? `'${k}'` : k
+    const sizeObj = {}
+    for (const [k, v] of Object.entries(def.size || {})) {
+      sizeObj[k] = dimensionToPx(v.$value)
+    }
+    const lineHeightObj = {}
+    for (const [k, v] of Object.entries(def.lineHeight || {})) {
+      lineHeightObj[k] = dimensionToPx(v.$value)
+    }
+    const weightObj = {}
+    for (const [k, v] of Object.entries(def.weight || {})) {
+      weightObj[k] = String(v.$value)
+    }
+    const letterSpacingObj = {}
+    for (const [k, v] of Object.entries(def.letterSpacing || {})) {
+      letterSpacingObj[k] = v.$value
+    }
+    const sizeEntries = Object.entries(sizeObj).map(([k, v]) => `  ${quoteKey(k)}: ${v},`).join('\n')
+    const lineHeightEntries = Object.entries(lineHeightObj).map(([k, v]) => `  ${quoteKey(k)}: ${v},`).join('\n')
+    const weightEntries = Object.entries(weightObj).map(([k, v]) => `  ${k}: '${v}',`).join('\n')
+    const letterSpacingEntries = Object.entries(letterSpacingObj).map(([k, v]) => `  ${quoteKey(k)}: ${v},`).join('\n')
+    const faceEntries = def.face
+      ? Object.entries(def.face).map(([w, map]) => `  ${w}: { normal: '${map.normal}' },`).join('\n')
+      : ''
+    return {
+      sizeEntries,
+      lineHeightEntries,
+      weightEntries,
+      letterSpacingEntries,
+      faceEntries,
+      fontFamilyWeb: def.fontFamily?.$value ?? '',
+      fontFamilyNative: def.fontFamilyNative?.$value ?? '',
+    }
+  }
+  const headingDef = buildFontDef('heading')
+  const bodyDef = buildFontDef('body')
+
+  const typographyTs = headingDef && bodyDef ? BANNER + `
+/** Web font family for headings (use with createFont on web) */
+export const FONT_FAMILY_HEADING_WEB = '${headingDef.fontFamilyWeb}'
+
+/** Native font family for headings */
+export const FONT_FAMILY_HEADING_NATIVE = '${headingDef.fontFamilyNative}'
+
+/** Web font family for body (use with createFont on web) */
+export const FONT_FAMILY_BODY_WEB = '${bodyDef.fontFamilyWeb}'
+
+/** Native font family for body */
+export const FONT_FAMILY_BODY_NATIVE = '${bodyDef.fontFamilyNative}'
+
+/** Font definition for createFont (heading). Use with family/face from above based on platform. */
+export const headingFontDef = {
+  size: {
+${headingDef.sizeEntries}
+  },
+  lineHeight: {
+${headingDef.lineHeightEntries}
+  },
+  weight: {
+${headingDef.weightEntries}
+  },
+  letterSpacing: {
+${headingDef.letterSpacingEntries}
+  },
+  face: {
+${headingDef.faceEntries}
+  },
+} as const
+
+/** Font definition for createFont (body). Use with family/face from above based on platform. */
+export const bodyFontDef = {
+  size: {
+${bodyDef.sizeEntries}
+  },
+  lineHeight: {
+${bodyDef.lineHeightEntries}
+  },
+  weight: {
+${bodyDef.weightEntries}
+  },
+  letterSpacing: {
+${bodyDef.letterSpacingEntries}
+  },
+  face: {
+${bodyDef.faceEntries}
+  },
+} as const
+` : null
+
+  // Shadow: build ShadowDef objects from shadows.json
+  const shadowObj = shadowData?.shadow || {}
+  const buildShadowDef = (token) => {
+    if (!token || token.$type !== 'shadow') return null
+    const ext = token.$extensions || {}
+    const ios = ext['mojaui.ios'] || {}
+    const android = ext['mojaui.android'] || {}
+    return {
+      web: { boxShadow: token.$value },
+      ios: {
+        shadowColor: ios.shadowColor ?? '#101828',
+        shadowOffset: ios.shadowOffset ?? { width: 0, height: 0 },
+        shadowOpacity: ios.shadowOpacity ?? 0,
+        shadowRadius: ios.shadowRadius ?? 0,
+      },
+      android: { elevation: android.elevation ?? 0 },
+    }
+  }
+  const escapeStr = (s) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+  const formatShadowDef = (def) => {
+    const web = escapeStr(def.web.boxShadow)
+    const ios = def.ios
+    return `    web: { boxShadow: '${web}' },
+    ios: { shadowColor: '${ios.shadowColor}', shadowOffset: { width: ${ios.shadowOffset.width}, height: ${ios.shadowOffset.height} }, shadowOpacity: ${ios.shadowOpacity}, shadowRadius: ${ios.shadowRadius} },
+    android: { elevation: ${def.android.elevation} }`
+  }
+  const shadowFamilyEntries = []
+  for (const [family, sizes] of Object.entries(shadowObj)) {
+    const sizeEntries = []
+    for (const [size, token] of Object.entries(sizes || {})) {
+      const def = buildShadowDef(token)
+      if (def) {
+        sizeEntries.push(`    ${size}: {\n${formatShadowDef(def)}\n    },`)
+      }
+    }
+    shadowFamilyEntries.push(`  ${family}: {\n${sizeEntries.join('\n')}\n  },`)
+  }
+  const shadowTs = shadowFamilyEntries.length > 0 ? BANNER + `
+export type ShadowFamily = 'compact' | 'wide' | 'anchored'
+export type ShadowSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'bottom' | 'top' | 'left' | 'right'
+
+export type ShadowDef = {
+  web: { boxShadow: string }
+  ios: {
+    shadowColor: string
+    shadowOffset: { width: number; height: number }
+    shadowOpacity: number
+    shadowRadius: number
+  }
+  android: { elevation: number }
+}
+
+export const shadows: Record<ShadowFamily, Partial<Record<ShadowSize, ShadowDef>>> = {
+${shadowFamilyEntries.join('\n')}
+}
+` : null
+
   const mojauiTokensTs = BANNER + `
 import { createTokens } from 'tamagui'
 
@@ -117,10 +280,7 @@ ${radiusEntries.join('\n')}
 export const RADIUS = { ...RADIUS_SCALE, input: RADIUS_SCALE.md } as const
 
 export const BORDER_WIDTH = {
-  none: 0,
-  thin: 1,
-  medium: 2,
-  thick: 4,
+${borderWidthEntries}
 } as const
 
 export const size = {
@@ -178,6 +338,14 @@ export type ThemeKeys = keyof Theme
 
   writeFileSync(path.join(GENERATED, 'mojaui_tokens.ts'), mojauiTokensTs, 'utf-8')
   writeFileSync(path.join(GENERATED, 'colors.ts'), colorsTs, 'utf-8')
+  if (typographyTs) {
+    writeFileSync(path.join(GENERATED, 'typography.ts'), typographyTs, 'utf-8')
+    console.log('codegen: wrote', path.join(GENERATED, 'typography.ts'))
+  }
+  if (shadowTs) {
+    writeFileSync(path.join(GENERATED, 'shadow.ts'), shadowTs, 'utf-8')
+    console.log('codegen: wrote', path.join(GENERATED, 'shadow.ts'))
+  }
 
   console.log('codegen: wrote', path.join(GENERATED, 'mojaui_tokens.ts'))
   console.log('codegen: wrote', path.join(GENERATED, 'colors.ts'))

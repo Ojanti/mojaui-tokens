@@ -1,0 +1,10 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Border width scale for MojaUI.",
+  "borderWidth": {
+    "none": { "$type": "dimension", "$value": { "value": 0, "unit": "px" } },
+    "thin": { "$type": "dimension", "$value": { "value": 1, "unit": "px" } },
+    "medium": { "$type": "dimension", "$value": { "value": 2, "unit": "px" } },
+    "thick": { "$type": "dimension", "$value": { "value": 4, "unit": "px" } }
+  }
+}
