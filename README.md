@@ -1,6 +1,6 @@
 # @ojanti/mojaui-tokens
 
-Design tokens for MojaUI in [W3C DTCG format](https://design-tokens.github.io/community-group/format/). Framework-agnostic source of truth for colors, typography, spacing, shadows, and more.
+Design tokens for MojaUI (e2e test) in [W3C DTCG format](https://design-tokens.github.io/community-group/format/). Framework-agnostic source of truth for colors, typography, spacing, shadows, and more.
 
 ## What are design tokens?
 
