@@ -12,7 +12,7 @@ Design tokens are named design decisions—colors, spacing, typography, shadows�
 |------|---------|
 | `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
 | `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
-| `src/typography.json` | Font families, sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing. Shared weight scale at typography.weight. Platform-specific face mappings in $extensions. |
+| `src/typography.json` | Font families (base, web stack, native), sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing. Shared weight scale at typography.weight. Platform-specific face mappings in $extensions. |
 | `src/shadows.json` | Shadow definitions with web (box-shadow), iOS, and Android platform values |
 | `src/spacing.json` | Space and size scales |
 | `src/radius.json` | Border radius scale |
@@ -35,6 +35,32 @@ Example:
     "brandPrimary": {
       "$type": "color",
       "$value": "#6C5CE7"
+    }
+  }
+}
+```
+
+## Font Family Tokens
+
+Typography tokens define three font family properties per role (heading, body):
+
+- **`fontFamily`** — Base family name (e.g., `"NunitoSans"`, `"Inter"`)  
+  Use for documentation, design tools, and inter-app operability.
+  
+- **`fontFamilyWeb`** — Full CSS font stack with fallbacks  
+  Use for web `font-family` CSS property.
+  
+- **`fontFamilyNative`** — React Native family name with weight suffix (e.g., `"NunitoSans-Regular"`)  
+  Required for Tamagui's `createFont` on native platforms. The `-Regular` suffix provides the base/fallback variant; weight-specific files are mapped via `$extensions['platform.fontFace']`.
+
+Example:
+```json
+{
+  "typography": {
+    "heading": {
+      "fontFamily": { "$type": "fontFamily", "$value": "NunitoSans" },
+      "fontFamilyWeb": { "$type": "fontFamily", "$value": "NunitoSans, Inter, system-ui, sans-serif" },
+      "fontFamilyNative": { "$type": "fontFamily", "$value": "NunitoSans-Regular" }
     }
   }
 }

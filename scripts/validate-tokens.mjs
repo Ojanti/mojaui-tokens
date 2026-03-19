@@ -252,7 +252,7 @@ function validateTypography(typography) {
       errors.push(`typography.json: invalid role "${role}"`)
       continue
     }
-    for (const key of ['fontFamily', 'fontFamilyNative']) {
+    for (const key of ['fontFamily', 'fontFamilyWeb', 'fontFamilyNative']) {
       const t = def[key]
       if (!t || typeof t !== 'object') continue
       if (t.$type !== 'fontFamily') {
