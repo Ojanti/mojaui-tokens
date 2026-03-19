@@ -202,21 +202,21 @@ function validateShadows(shadow) {
       }
       const ext = token.$extensions
       if (ext && typeof ext === 'object') {
-        const ios = ext['mojaui.ios']
+        const ios = ext['platform.ios']
         if (ios && typeof ios === 'object') {
           for (const key of IOS_KEYS) {
             if (!(key in ios)) {
-              errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.ios missing "${key}"`)
+              errors.push(`shadows.json: token "${family}.${size}" $extensions.platform.ios missing "${key}"`)
             }
           }
           if (ios.shadowOffset && (typeof ios.shadowOffset.width !== 'number' || typeof ios.shadowOffset.height !== 'number')) {
-            errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.ios.shadowOffset must have width and height numbers`)
+            errors.push(`shadows.json: token "${family}.${size}" $extensions.platform.ios.shadowOffset must have width and height numbers`)
           }
         }
-        const android = ext['mojaui.android']
+        const android = ext['platform.android']
         if (android && typeof android === 'object') {
           if (typeof android.elevation !== 'number' || android.elevation < 0) {
-            errors.push(`shadows.json: token "${family}.${size}" $extensions.mojaui.android.elevation must be non-negative number`)
+            errors.push(`shadows.json: token "${family}.${size}" $extensions.platform.android.elevation must be non-negative number`)
           }
         }
       }
@@ -226,7 +226,28 @@ function validateShadows(shadow) {
 
 function validateTypography(typography) {
   if (!typography || typeof typography !== 'object') return
+  
+  // Validate typography.weight at root
+  const sharedWeight = typography.weight
+  if (sharedWeight && typeof sharedWeight === 'object') {
+    for (const [k, v] of Object.entries(sharedWeight)) {
+      if (!v || typeof v !== 'object') {
+        errors.push(`typography.json: typography.weight.${k} invalid`)
+        continue
+      }
+      if (v.$type !== 'number') {
+        errors.push(`typography.json: typography.weight.${k} must have $type: "number"`)
+      }
+      if (typeof v.$value !== 'number') {
+        errors.push(`typography.json: typography.weight.${k} must have $value number`)
+      }
+    }
+  }
+  
   for (const [role, def] of Object.entries(typography)) {
+    // Skip 'weight' as it's the shared weight, not a font role
+    if (role === 'weight') continue
+    
     if (!def || typeof def !== 'object') {
       errors.push(`typography.json: invalid role "${role}"`)
       continue
@@ -255,19 +276,28 @@ function validateTypography(typography) {
         validateDimension(v.$value, 'typography.json', `${role}.${group}.${k}`)
       }
     }
-    for (const group of ['weight', 'letterSpacing']) {
-      const obj = def[group]
-      if (!obj || typeof obj !== 'object') continue
-      for (const [k, v] of Object.entries(obj)) {
+    // Only validate letterSpacing (weight is now at root, not per-role)
+    const letterSpacing = def.letterSpacing
+    if (letterSpacing && typeof letterSpacing === 'object') {
+      for (const [k, v] of Object.entries(letterSpacing)) {
         if (!v || typeof v !== 'object') {
-          errors.push(`typography.json: ${role}.${group}.${k} invalid`)
+          errors.push(`typography.json: ${role}.letterSpacing.${k} invalid`)
           continue
         }
         if (v.$type !== 'number') {
-          errors.push(`typography.json: ${role}.${group}.${k} must have $type: "number"`)
+          errors.push(`typography.json: ${role}.letterSpacing.${k} must have $type: "number"`)
         }
         if (typeof v.$value !== 'number') {
-          errors.push(`typography.json: ${role}.${group}.${k} must have $value number`)
+          errors.push(`typography.json: ${role}.letterSpacing.${k} must have $value number`)
+        }
+      }
+    }
+    // Optionally validate $extensions['platform.fontFace'] if present
+    const faceData = def.$extensions?.['platform.fontFace']
+    if (faceData && typeof faceData === 'object') {
+      for (const [w, map] of Object.entries(faceData)) {
+        if (!map || typeof map !== 'object' || typeof map.normal !== 'string') {
+          errors.push(`typography.json: ${role}.$extensions['platform.fontFace'].${w} must have { normal: string }`)
         }
       }
     }

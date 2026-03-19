@@ -2,44 +2,43 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "$description": "Typography tokens for MojaUI (heading and body fonts).",
   "typography": {
+    "weight": {
+      "400": { "$type": "number", "$value": 400 },
+      "600": { "$type": "number", "$value": 600 },
+      "700": { "$type": "number", "$value": 700 },
+      "800": { "$type": "number", "$value": 800 }
+    },
     "heading": {
       "fontFamily": { "$type": "fontFamily", "$value": "NunitoSans, Inter, system-ui, sans-serif" },
       "fontFamilyNative": { "$type": "fontFamily", "$value": "NunitoSans-Regular" },
       "size": {
-        "0": { "$type": "dimension", "$value": { "value": 36, "unit": "px" } },
-        "1": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
-        "2": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } },
-        "3": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
-        "4": { "$type": "dimension", "$value": { "value": 20, "unit": "px" } },
-        "5": { "$type": "dimension", "$value": { "value": 18, "unit": "px" } }
+        "1": { "$type": "dimension", "$value": { "value": 36, "unit": "px" } },
+        "2": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
+        "3": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } },
+        "4": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
+        "5": { "$type": "dimension", "$value": { "value": 20, "unit": "px" } }
       },
       "lineHeight": {
-        "0": { "$type": "dimension", "$value": { "value": 44, "unit": "px" } },
-        "1": { "$type": "dimension", "$value": { "value": 40, "unit": "px" } },
-        "2": { "$type": "dimension", "$value": { "value": 36, "unit": "px" } },
-        "3": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
-        "4": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } },
-        "5": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } }
-      },
-      "weight": {
-        "4": { "$type": "number", "$value": 400 },
-        "6": { "$type": "number", "$value": 600 },
-        "7": { "$type": "number", "$value": 700 },
-        "8": { "$type": "number", "$value": 800 }
+        "1": { "$type": "dimension", "$value": { "value": 44, "unit": "px" } },
+        "2": { "$type": "dimension", "$value": { "value": 40, "unit": "px" } },
+        "3": { "$type": "dimension", "$value": { "value": 36, "unit": "px" } },
+        "4": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
+        "5": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } }
       },
       "letterSpacing": {
-        "0": { "$type": "number", "$value": -0.02 },
         "1": { "$type": "number", "$value": -0.02 },
         "2": { "$type": "number", "$value": -0.02 },
-        "3": { "$type": "number", "$value": 0 },
+        "3": { "$type": "number", "$value": -0.02 },
         "4": { "$type": "number", "$value": 0 },
         "5": { "$type": "number", "$value": 0 }
       },
-      "face": {
-        "400": { "normal": "NunitoSans-Regular" },
-        "600": { "normal": "NunitoSans-SemiBold" },
-        "700": { "normal": "NunitoSans-Bold" },
-        "800": { "normal": "NunitoSans-ExtraBold" }
+      "$extensions": {
+        "platform.fontFace": {
+          "400": { "normal": "NunitoSans-Regular" },
+          "600": { "normal": "NunitoSans-SemiBold" },
+          "700": { "normal": "NunitoSans-Bold" },
+          "800": { "normal": "NunitoSans-ExtraBold" }
+        }
       }
     },
     "body": {
@@ -59,12 +58,6 @@
         "xs": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } },
         "xxs": { "$type": "dimension", "$value": { "value": 12, "unit": "px" } }
       },
-      "weight": {
-        "4": { "$type": "number", "$value": 400 },
-        "6": { "$type": "number", "$value": 600 },
-        "7": { "$type": "number", "$value": 700 },
-        "8": { "$type": "number", "$value": 800 }
-      },
       "letterSpacing": {
         "lg": { "$type": "number", "$value": 0 },
         "md": { "$type": "number", "$value": 0 },
@@ -72,11 +65,13 @@
         "xs": { "$type": "number", "$value": 0 },
         "xxs": { "$type": "number", "$value": 0 }
       },
-      "face": {
-        "400": { "normal": "Inter-Regular" },
-        "600": { "normal": "Inter-SemiBold" },
-        "700": { "normal": "Inter-Bold" },
-        "800": { "normal": "Inter-ExtraBold" }
+      "$extensions": {
+        "platform.fontFace": {
+          "400": { "normal": "Inter-Regular" },
+          "600": { "normal": "Inter-SemiBold" },
+          "700": { "normal": "Inter-Bold" },
+          "800": { "normal": "Inter-ExtraBold" }
+        }
       }
     }
   }

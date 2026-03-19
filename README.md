@@ -12,7 +12,7 @@ Design tokens are named design decisions—colors, spacing, typography, shadows�
 |------|---------|
 | `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
 | `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
-| `src/typography.json` | Font families, sizes, line heights, weights, letter spacing, face mappings for heading and body |
+| `src/typography.json` | Font families, sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing. Shared weight scale at typography.weight. Platform-specific face mappings in $extensions. |
 | `src/shadows.json` | Shadow definitions with web (box-shadow), iOS, and Android platform values |
 | `src/spacing.json` | Space and size scales |
 | `src/radius.json` | Border radius scale |
@@ -25,7 +25,7 @@ Tokens follow the W3C DTCG specification:
 
 - **`$type`** — Token type (`color`, `dimension`, `number`, `shadow`, `fontFamily`, etc.)
 - **`$value`** — The token value (string, number, or object depending on type)
-- **`$extensions`** — Optional platform-specific overrides (e.g. `mojaui.ios`, `mojaui.android` for shadows)
+- **`$extensions`** — Optional platform-specific overrides (e.g. `platform.ios`, `platform.android` for shadows; `platform.fontFace` for native font file mappings)
 
 Example:
 
