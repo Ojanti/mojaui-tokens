@@ -12,7 +12,7 @@ Design tokens are named design decisions—colors, spacing, typography, shadows�
 |------|---------|
 | `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
 | `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
-| `src/typography.json` | Font families (base, web stack, native), sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing. Shared weight scale at typography.weight. Platform-specific face mappings in $extensions. |
+| `src/typography.json` | Font families (base, web stack, native), sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing, paragraph spacing. Shared weight scale (400-800) at typography.weight. Platform-specific face mappings in $extensions. |
 | `src/shadows.json` | Shadow definitions with web (box-shadow), iOS, and Android platform values |
 | `src/spacing.json` | Space and size scales |
 | `src/radius.json` | Border radius scale |
@@ -62,6 +62,35 @@ Example:
       "fontFamilyWeb": { "$type": "fontFamily", "$value": "NunitoSans, Inter, system-ui, sans-serif" },
       "fontFamilyNative": { "$type": "fontFamily", "$value": "NunitoSans-Regular" }
     }
+  }
+}
+```
+
+## Additional Typography Tokens
+
+### Font Weight Scale
+
+The shared weight scale supports weights from 400 (Regular) to 800 (ExtraBold):
+
+- **400** — Regular
+- **500** — Medium ⭐ _Added for enhanced typography hierarchy_
+- **600** — SemiBold  
+- **700** — Bold
+- **800** — ExtraBold
+
+### Paragraph Spacing
+
+Each typography role (heading, body) includes `paragraphSpacing` tokens for consistent text block spacing:
+
+- **Heading**: Uses numeric scale (1-5, largest to smallest)
+- **Body**: Uses size scale (lg, md, sm, xs, xxs)
+
+Example paragraph spacing usage:
+```json
+"heading": {
+  "paragraphSpacing": {
+    "1": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
+    "2": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } }
   }
 }
 ```

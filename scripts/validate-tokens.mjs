@@ -262,7 +262,7 @@ function validateTypography(typography) {
         errors.push(`typography.json: ${role}.${key} must have $value string`)
       }
     }
-    for (const group of ['size', 'lineHeight']) {
+    for (const group of ['size', 'lineHeight', 'paragraphSpacing']) {
       const obj = def[group]
       if (!obj || typeof obj !== 'object') continue
       for (const [k, v] of Object.entries(obj)) {
