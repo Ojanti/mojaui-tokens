@@ -4,7 +4,7 @@ Design tokens for MojaUI in [W3C DTCG format](https://design-tokens.github.io/co
 
 ## What are design tokens?
 
-Design tokens are named design decisions—colors, spacing, typography, shadows—stored in a platform-agnostic format. They enable consistent styling across web, mobile, and other platforms. This repository provides the canonical token definitions in the W3C Design Tokens Community Group (DTCG) format, which is widely supported by tools like Style Dictionary, Tokens Studio, and custom pipelines.
+Design tokens are named design decisions (colors, spacing, typography, shadows), stored in a platform-agnostic format. They enable consistent styling across web, mobile, and other platforms. This repository provides the canonical token definitions in the W3C Design Tokens Community Group (DTCG) format, which is widely supported by tools like Style Dictionary, Tokens Studio, and custom pipelines.
 
 ## Token categories
 
@@ -23,9 +23,9 @@ Design tokens are named design decisions—colors, spacing, typography, shadows�
 
 Tokens follow the W3C DTCG specification:
 
-- **`$type`** — Token type (`color`, `dimension`, `number`, `shadow`, `fontFamily`, etc.)
-- **`$value`** — The token value (string, number, or object depending on type)
-- **`$extensions`** — Optional platform-specific overrides (e.g. `platform.ios`, `platform.android` for shadows; `platform.fontFace` for native font file mappings)
+- **`$type`** - Token type (`color`, `dimension`, `number`, `shadow`, `fontFamily`, etc.)
+- **`$value`** - The token value (string, number, or object depending on type)
+- **`$extensions`** - Optional platform-specific overrides (e.g. `platform.ios`, `platform.android` for shadows; `platform.fontFace` for native font file mappings)
 
 Example:
 
@@ -44,13 +44,13 @@ Example:
 
 Typography tokens define three font family properties per role (heading, body):
 
-- **`fontFamily`** — Base family name (e.g., `"NunitoSans"`, `"Inter"`)  
+- **`fontFamily`** - Base family name (e.g., `"NunitoSans"`, `"Inter"`)  
   Use for documentation, design tools, and inter-app operability.
   
-- **`fontFamilyWeb`** — Full CSS font stack with fallbacks  
+- **`fontFamilyWeb`** - Full CSS font stack with fallbacks  
   Use for web `font-family` CSS property.
   
-- **`fontFamilyNative`** — React Native family name with weight suffix (e.g., `"NunitoSans-Regular"`)  
+- **`fontFamilyNative`** - React Native family name with weight suffix (e.g., `"NunitoSans-Regular"`)  
   Required for Tamagui's `createFont` on native platforms. The `-Regular` suffix provides the base/fallback variant; weight-specific files are mapped via `$extensions['platform.fontFace']`.
 
 Example:
@@ -72,11 +72,11 @@ Example:
 
 The shared weight scale supports weights from 400 (Regular) to 800 (ExtraBold):
 
-- **400** — Regular
-- **500** — Medium ⭐ _Added for enhanced typography hierarchy_
-- **600** — SemiBold  
-- **700** — Bold
-- **800** — ExtraBold
+- **400** - Regular
+- **500** - Medium ⭐ _Added for enhanced typography hierarchy_
+- **600** - SemiBold  
+- **700** - Bold
+- **800** - ExtraBold
 
 ### Paragraph Spacing
 
@@ -99,9 +99,9 @@ Example paragraph spacing usage:
 
 Clone this repository and use the JSON files with any design token tooling:
 
-- **Style Dictionary** — Transform tokens to CSS variables, iOS/Android assets, etc.
-- **Tokens Studio** — Sync with Figma or other design tools
-- **Custom scripts** — Parse the JSON and generate outputs for your stack
+- **Style Dictionary** - Transform tokens to CSS variables, iOS/Android assets, etc.
+- **Tokens Studio** - Sync with Figma or other design tools
+- **Custom scripts** - Parse the JSON and generate outputs for your stack
 
 The tokens are framework-agnostic. You can build pipelines for React, Vue, React Native, Flutter, or plain CSS.
 
@@ -143,7 +143,7 @@ Validation checks schema compliance, reference resolution (e.g. `{palette.brandP
 
 ## License
 
-[CC BY 4.0](LICENSE) — Creative Commons Attribution 4.0 International. You may use, share, and adapt these tokens with attribution.
+[CC BY 4.0](LICENSE) - Creative Commons Attribution 4.0 International. You may use, share, and adapt these tokens with attribution.
 
 ## MojaUI
 
