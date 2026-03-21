@@ -3,11 +3,11 @@
   "$description": "Typography tokens for MojaUI (heading and body fonts).",
   "typography": {
     "weight": {
-      "400": { "$type": "number", "$value": 400 },
-      "500": { "$type": "number", "$value": 500 },
-      "600": { "$type": "number", "$value": 600 },
-      "700": { "$type": "number", "$value": 700 },
-      "800": { "$type": "number", "$value": 800 }
+      "400": { "$type": "fontWeight", "$value": 400 },
+      "500": { "$type": "fontWeight", "$value": 500 },
+      "600": { "$type": "fontWeight", "$value": 600 },
+      "700": { "$type": "fontWeight", "$value": 700 },
+      "800": { "$type": "fontWeight", "$value": 800 }
     },
     "heading": {
       "fontFamily": { "$type": "fontFamily", "$value": "NunitoSans" },
@@ -19,6 +19,13 @@
         "3": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } },
         "4": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
         "5": { "$type": "dimension", "$value": { "value": 20, "unit": "px" } }
+      },
+      "fontWeight": {
+        "1": { "$type": "fontWeight", "$value": "{typography.weight.800}" },
+        "2": { "$type": "fontWeight", "$value": "{typography.weight.700}" },
+        "3": { "$type": "fontWeight", "$value": "{typography.weight.700}" },
+        "4": { "$type": "fontWeight", "$value": "{typography.weight.600}" },
+        "5": { "$type": "fontWeight", "$value": "{typography.weight.600}" }
       },
       "lineHeight": {
         "1": { "$type": "dimension", "$value": { "value": 44, "unit": "px" } },
@@ -62,19 +69,26 @@
         "xs": { "$type": "dimension", "$value": { "value": 12, "unit": "px" } },
         "xxs": { "$type": "dimension", "$value": { "value": 10, "unit": "px" } }
       },
+      "fontWeight": {
+        "lg": { "$type": "fontWeight", "$value": "{typography.weight.400}" },
+        "md": { "$type": "fontWeight", "$value": "{typography.weight.400}" },
+        "sm": { "$type": "fontWeight", "$value": "{typography.weight.400}" },
+        "xs": { "$type": "fontWeight", "$value": "{typography.weight.400}" },
+        "xxs": { "$type": "fontWeight", "$value": "{typography.weight.400}" }
+      },
       "lineHeight": {
         "lg": { "$type": "dimension", "$value": { "value": 28, "unit": "px" } },
         "md": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
         "sm": { "$type": "dimension", "$value": { "value": 20, "unit": "px" } },
-        "xs": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } },
-        "xxs": { "$type": "dimension", "$value": { "value": 12, "unit": "px" } }
+        "xs": { "$type": "dimension", "$value": { "value": 18, "unit": "px" } },
+        "xxs": { "$type": "dimension", "$value": { "value": 14, "unit": "px" } }
       },
       "letterSpacing": {
         "lg": { "$type": "number", "$value": 0 },
         "md": { "$type": "number", "$value": 0 },
         "sm": { "$type": "number", "$value": 0 },
-        "xs": { "$type": "number", "$value": 0 },
-        "xxs": { "$type": "number", "$value": 0 }
+        "xs": { "$type": "number", "$value": 0.01 },
+        "xxs": { "$type": "number", "$value": 0.02 }
       },
       "paragraphSpacing": {
         "lg": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
