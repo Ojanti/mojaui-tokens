@@ -181,6 +181,34 @@ function validateBorderWidth(borderWidth) {
   }
 }
 
+const SHADOW_LAYER_KEYS = ['color', 'offsetX', 'offsetY', 'blur', 'spread']
+
+function validateShadowValue(pathLabel, v) {
+  if (typeof v === 'string') {
+    if (!v.trim()) {
+      errors.push(`shadows.json: token "${pathLabel}" $value must be non-empty string or composite array`)
+    }
+    return
+  }
+  if (!Array.isArray(v) || v.length === 0) {
+    errors.push(`shadows.json: token "${pathLabel}" $value must be non-empty string or non-empty layer array`)
+    return
+  }
+  for (let i = 0; i < v.length; i++) {
+    const layer = v[i]
+    const lp = `${pathLabel} layer[${i}]`
+    if (!layer || typeof layer !== 'object') {
+      errors.push(`shadows.json: ${lp} must be an object`)
+      continue
+    }
+    for (const key of SHADOW_LAYER_KEYS) {
+      if (typeof layer[key] !== 'string' || !layer[key].trim()) {
+        errors.push(`shadows.json: ${lp} missing or invalid string "${key}"`)
+      }
+    }
+  }
+}
+
 function validateShadows(shadow) {
   if (!shadow || typeof shadow !== 'object') return
   const IOS_KEYS = ['shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius']
@@ -197,9 +225,7 @@ function validateShadows(shadow) {
       if (token.$type !== 'shadow') {
         errors.push(`shadows.json: token "${family}.${size}" must have $type: "shadow"`)
       }
-      if (typeof token.$value !== 'string' || !token.$value.trim()) {
-        errors.push(`shadows.json: token "${family}.${size}" must have non-empty $value string`)
-      }
+      validateShadowValue(`${family}.${size}`, token.$value)
       const ext = token.$extensions
       if (ext && typeof ext === 'object') {
         const ios = ext['platform.ios']
@@ -227,7 +253,7 @@ function validateShadows(shadow) {
 function validateTypography(typography) {
   if (!typography || typeof typography !== 'object') return
   
-  // Validate typography.weight at root
+  // Validate typography.weight at root (DTCG fontWeight type)
   const sharedWeight = typography.weight
   if (sharedWeight && typeof sharedWeight === 'object') {
     for (const [k, v] of Object.entries(sharedWeight)) {
@@ -235,15 +261,19 @@ function validateTypography(typography) {
         errors.push(`typography.json: typography.weight.${k} invalid`)
         continue
       }
-      if (v.$type !== 'number') {
-        errors.push(`typography.json: typography.weight.${k} must have $type: "number"`)
+      if (v.$type !== 'fontWeight' && v.$type !== 'number') {
+        errors.push(`typography.json: typography.weight.${k} must have $type: "fontWeight" (or legacy "number")`)
       }
-      if (typeof v.$value !== 'number') {
-        errors.push(`typography.json: typography.weight.${k} must have $value number`)
+      const w = v.$value
+      const okNum = typeof w === 'number' && w >= 1 && w <= 1000
+      if (!okNum) {
+        errors.push(`typography.json: typography.weight.${k} must have $value as font weight number 1–1000`)
       }
     }
   }
-  
+
+  const WEIGHT_REF = /^\{typography\.weight\.\d+\}$/
+
   for (const [role, def] of Object.entries(typography)) {
     // Skip 'weight' as it's the shared weight, not a font role
     if (role === 'weight') continue
@@ -260,6 +290,46 @@ function validateTypography(typography) {
       }
       if (typeof t.$value !== 'string') {
         errors.push(`typography.json: ${role}.${key} must have $value string`)
+      }
+    }
+
+    if (role === 'heading' || role === 'body') {
+      const fwGroup = def.fontWeight
+      const sizeObj = def.size
+      if (fwGroup && typeof fwGroup === 'object' && fwGroup.$type === undefined && fwGroup.$value === undefined) {
+        if (!sizeObj || typeof sizeObj !== 'object') {
+          errors.push(`typography.json: ${role}.size is required when ${role}.fontWeight step group is present`)
+        } else {
+          const sizeKeys = Object.keys(sizeObj).sort()
+          const fwKeys = Object.keys(fwGroup).sort()
+          if (sizeKeys.join('\0') !== fwKeys.join('\0')) {
+            errors.push(
+              `typography.json: ${role}.fontWeight keys must match ${role}.size keys (got [${fwKeys.join(', ')}], expected [${sizeKeys.join(', ')}])`
+            )
+          }
+          for (const k of sizeKeys) {
+            const v = fwGroup[k]
+            if (!v || typeof v !== 'object') {
+              errors.push(`typography.json: ${role}.fontWeight.${k} invalid`)
+              continue
+            }
+            if (v.$type !== 'fontWeight') {
+              errors.push(`typography.json: ${role}.fontWeight.${k} must have $type: "fontWeight"`)
+            }
+            const val = v.$value
+            const okRef = typeof val === 'string' && WEIGHT_REF.test(val)
+            const okNum = typeof val === 'number' && val >= 1 && val <= 1000
+            if (!okRef && !okNum) {
+              errors.push(
+                `typography.json: ${role}.fontWeight.${k}.$value must be a number 1–1000 or alias like "{typography.weight.700}"`
+              )
+            }
+          }
+        }
+      } else if (fwGroup && typeof fwGroup === 'object' && (fwGroup.$type !== undefined || fwGroup.$value !== undefined)) {
+        errors.push(
+          `typography.json: ${role}.fontWeight must be a group with one fontWeight token per size step (not a single token)`
+        )
       }
     }
     for (const group of ['size', 'lineHeight', 'paragraphSpacing']) {

@@ -1,11 +1,15 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Shadow tokens. Web-canonical with platform extensions for iOS and Android.",
+  "$description": "Shadow tokens. Web: DTCG composite $value (layers) or legacy CSS string; codegen emits box-shadow. iOS/Android via $extensions.",
   "shadow": {
     "compact": {
       "xs": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.06), 0px 1px 2px rgba(16, 24, 40, 0.07), 0px 2px 4px rgba(16, 24, 40, 0.03)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.07)", "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.03)", "offsetX": "0px", "offsetY": "2px", "blur": "4px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -18,7 +22,11 @@
       },
       "sm": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.05), 0px 1px 3px rgba(16, 24, 40, 0.10), 0px 3px 8px rgba(16, 24, 40, 0.05)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.05)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.10)", "offsetX": "0px", "offsetY": "1px", "blur": "3px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.05)", "offsetX": "0px", "offsetY": "3px", "blur": "8px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -31,7 +39,11 @@
       },
       "md": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.04), 0px 2px 4px rgba(16, 24, 40, 0.12), 0px 4px 12px rgba(16, 24, 40, 0.06)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.04)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.12)", "offsetX": "0px", "offsetY": "2px", "blur": "4px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "0px", "offsetY": "4px", "blur": "12px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -44,7 +56,11 @@
       },
       "lg": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.03), 0px 4px 6px rgba(16, 24, 40, 0.14), 0px 8px 24px rgba(16, 24, 40, 0.08)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.03)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "0px", "offsetY": "4px", "blur": "6px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "0px", "offsetY": "8px", "blur": "24px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -57,7 +73,11 @@
       },
       "xl": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.03), 0px 6px 10px rgba(16, 24, 40, 0.16), 0px 14px 36px rgba(16, 24, 40, 0.10)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.03)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.16)", "offsetX": "0px", "offsetY": "6px", "blur": "10px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.10)", "offsetX": "0px", "offsetY": "14px", "blur": "36px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -72,7 +92,11 @@
     "wide": {
       "xs": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.05), 0px 2px 4px rgba(16, 24, 40, 0.08), 0px 4px 10px rgba(16, 24, 40, 0.04)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.05)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "0px", "offsetY": "2px", "blur": "4px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.04)", "offsetX": "0px", "offsetY": "4px", "blur": "10px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -85,7 +109,11 @@
       },
       "sm": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.04), 0px 4px 8px rgba(16, 24, 40, 0.10), 0px 8px 22px rgba(16, 24, 40, 0.06)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.04)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.10)", "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "0px", "offsetY": "8px", "blur": "22px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -98,7 +126,11 @@
       },
       "md": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.03), 0px 6px 12px rgba(16, 24, 40, 0.12), 0px 14px 32px rgba(16, 24, 40, 0.07)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.03)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.12)", "offsetX": "0px", "offsetY": "6px", "blur": "12px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.07)", "offsetX": "0px", "offsetY": "14px", "blur": "32px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -111,7 +143,11 @@
       },
       "lg": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.03), 0px 8px 16px rgba(16, 24, 40, 0.14), 0px 20px 48px rgba(16, 24, 40, 0.09)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.03)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "0px", "offsetY": "8px", "blur": "16px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.09)", "offsetX": "0px", "offsetY": "20px", "blur": "48px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -124,7 +160,11 @@
       },
       "xl": {
         "$type": "shadow",
-        "$value": "0 0 0 1px rgba(16, 24, 40, 0.02), 0px 12px 22px rgba(16, 24, 40, 0.16), 0px 28px 64px rgba(16, 24, 40, 0.11)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.02)", "offsetX": "0px", "offsetY": "0px", "blur": "0px", "spread": "1px" },
+          { "color": "rgba(16,24,40,0.16)", "offsetX": "0px", "offsetY": "12px", "blur": "22px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.11)", "offsetX": "0px", "offsetY": "28px", "blur": "64px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -139,7 +179,11 @@
     "anchored": {
       "bottom": {
         "$type": "shadow",
-        "$value": "0 -1px 0 0 rgba(16, 24, 40, 0.06), 0px -4px 8px rgba(16, 24, 40, 0.14), 0px -10px 24px rgba(16, 24, 40, 0.08)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "0px", "offsetY": "-1px", "blur": "0px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "0px", "offsetY": "-4px", "blur": "8px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "0px", "offsetY": "-10px", "blur": "24px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -152,7 +196,11 @@
       },
       "top": {
         "$type": "shadow",
-        "$value": "0 1px 0 0 rgba(16, 24, 40, 0.06), 0px 4px 8px rgba(16, 24, 40, 0.14), 0px 10px 24px rgba(16, 24, 40, 0.08)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "0px", "offsetY": "1px", "blur": "0px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "0px", "offsetY": "10px", "blur": "24px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -165,7 +213,11 @@
       },
       "left": {
         "$type": "shadow",
-        "$value": "1px 0 0 0 rgba(16, 24, 40, 0.06), 4px 0px 8px rgba(16, 24, 40, 0.14), 10px 0px 24px rgba(16, 24, 40, 0.08)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "1px", "offsetY": "0px", "blur": "0px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "4px", "offsetY": "0px", "blur": "8px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "10px", "offsetY": "0px", "blur": "24px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
@@ -178,7 +230,11 @@
       },
       "right": {
         "$type": "shadow",
-        "$value": "-1px 0 0 0 rgba(16, 24, 40, 0.06), -4px 0px 8px rgba(16, 24, 40, 0.14), -10px 0px 24px rgba(16, 24, 40, 0.08)",
+        "$value": [
+          { "color": "rgba(16,24,40,0.06)", "offsetX": "-1px", "offsetY": "0px", "blur": "0px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.14)", "offsetX": "-4px", "offsetY": "0px", "blur": "8px", "spread": "0px" },
+          { "color": "rgba(16,24,40,0.08)", "offsetX": "-10px", "offsetY": "0px", "blur": "24px", "spread": "0px" }
+        ],
         "$extensions": {
           "platform.ios": {
             "shadowColor": "#101828",
