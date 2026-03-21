@@ -12,10 +12,10 @@ Design tokens are named design decisions (colors, spacing, typography, shadows),
 |------|---------|
 | `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
 | `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
-| `src/typography.json` | Font families (base, web stack, native), sizes (1-5 for headings, lg-xxs for body), line heights, letter spacing, paragraph spacing. Shared weight scale (400-800) at typography.weight. Platform-specific face mappings in $extensions. |
+| `src/typography.json` | Font families (base, web stack, native), `fontWeight` per type step (same keys as `size`; heading steps default to `typography.weight.700`, body to `typography.weight.400`), sizes, line heights, letter spacing, paragraph spacing. Shared weight scale (400-800) at `typography.weight` (`fontWeight` type). Platform-specific face mappings in `$extensions`. |
 | `src/shadows.json` | Shadow definitions with web (box-shadow), iOS, and Android platform values |
 | `src/spacing.json` | Space and size scales |
-| `src/radius.json` | Border radius scale |
+| `src/radius.json` | Border radius scale (`none` → `full`; no `input` — use `md` for fields in code) |
 | `src/borderWidth.json` | Border width scale |
 | `src/zIndex.json` | Z-index layers |
 
