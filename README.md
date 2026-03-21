@@ -17,7 +17,7 @@ Design tokens are named design decisions (colors, spacing, typography, shadows),
 | `src/spacing.json` | Space and size scales |
 | `src/radius.json` | Border radius scale (`none` → `full`; no `input` — use `md` for fields in code) |
 | `src/borderWidth.json` | Border width scale |
-| `src/zIndex.json` | Z-index layers |
+| `src/zIndex.json` | Z-index layers (`base`, `raised`, `dropdown`, `sticky`, `modal`, `toast`) |
 
 ## Format
 
@@ -94,6 +94,21 @@ Example paragraph spacing usage:
   }
 }
 ```
+
+## Z-index scale
+
+Semantic layer names (values unchanged from the previous numeric scale):
+
+| Token | Value | Typical use |
+|-------|------:|-------------|
+| `base` | 0 | Default stacking |
+| `raised` | 100 | Slightly above siblings |
+| `dropdown` | 200 | Menus, popovers |
+| `sticky` | 300 | Sticky headers / bars |
+| `modal` | 400 | Dialogs, sheets |
+| `toast` | 500 | Toasts, top-level banners |
+
+In Tamagui / MojaUI codegen, use props like `zIndex="$modal"` (not the old `$0`–`$5` keys).
 
 ## How to use
 
