@@ -10,7 +10,6 @@
     "xl": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } },
     "2xl": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
     "3xl": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
-    "4xl": { "$type": "dimension", "$value": { "value": 40, "unit": "px" } },
     "full": { "$type": "dimension", "$value": { "value": 9999, "unit": "px" } }
   }
 }

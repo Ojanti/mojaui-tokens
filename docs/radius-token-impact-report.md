@@ -14,7 +14,6 @@ Reference for `packages/tokens/src/radius.json` and how **mojaui-core** consumes
 | `xl` | 16 |
 | `2xl` | 24 |
 | `3xl` | 32 |
-| `4xl` | 40 |
 | `full` | 9999 |
 
 There is **no** `radius.input` in JSON. Form controls use **`RADIUS.md`** (8px) in component code.
