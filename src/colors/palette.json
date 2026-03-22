@@ -278,7 +278,7 @@
       "$type": "color",
       "$value": "#2C1501"
     },
-    "cardOnSurface": {
+    "onSurface": {
       "$type": "color",
       "$value": "rgba(242, 244, 247, 0.07)"
     }

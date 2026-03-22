@@ -10,8 +10,8 @@ Design tokens are named design decisions (colors, spacing, typography, shadows),
 
 | File | Purpose |
 |------|---------|
-| `src/colors/palette.json` | Base color palette (raw hex/rgba values) |
-| `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette |
+| `src/colors/palette.json` | Base color palette (raw hex/rgba values), including **`onSurface`** (translucent tint for layered surfaces on dark backgrounds) |
+| `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette. Includes **on-surface** layers: `onSurfaceBase`, `onSurfaceBold100`, `onSurfaceBold200` (tinted stacks on elevated surfaces; dark mode maps to palette `onSurface`). |
 | `src/typography.json` | Font families (base, web stack, native), `fontWeight` per type step (same keys as `size`; heading steps default to `typography.weight.700`, body to `typography.weight.400`), sizes, line heights, letter spacing, paragraph spacing. Shared weight scale (400-800) at `typography.weight` (`fontWeight` type). Platform-specific face mappings in `$extensions`. |
 | `src/shadows.json` | Shadow definitions: web as DTCG composite layers (`$value` array of `{ color, offsetX, offsetY, blur, spread }`) or legacy CSS string; iOS/Android in `$extensions` |
 | `src/spacing.json` | Space and size scales |
