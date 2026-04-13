@@ -10,7 +10,7 @@ Design tokens are named design decisions (colors, spacing, typography, shadows),
 
 | File | Purpose |
 |------|---------|
-| `src/colors/palette.json` | Base color palette (raw hex/rgba values), including **`onSurface`** (translucent tint for layered surfaces on dark backgrounds) |
+| `src/colors/palette.json` | Base color palette (raw hex/rgba values), including **`onSurface`** (translucent tint for layered surfaces on dark backgrounds). Anchors: **`whiteBase`**, **`blackBase`**, **`blackAbsolute`**; alpha steps **`whiteAlpha30/60/75`**, **`blackAlpha30/60/75`** (number = opacity %). |
 | `src/colors/theme.json` | Semantic theme tokens (light/dark) referencing palette. Includes **on-surface** layers: `onSurfaceBase`, `onSurfaceBold100`, `onSurfaceBold200` (tinted stacks on elevated surfaces; dark mode maps to palette `onSurface`). |
 | `src/typography.json` | Font families (base, web stack, native), `fontWeight` per type step (same keys as `size`; heading steps default to `typography.weight.700`, body to `typography.weight.400`), sizes, line heights, letter spacing, paragraph spacing. Shared weight scale (400-800) at `typography.weight` (`fontWeight` type). Platform-specific face mappings in `$extensions`. |
 | `src/shadows.json` | Shadow definitions: web as DTCG composite layers (`$value` array of `{ color, offsetX, offsetY, blur, spread }`) or legacy CSS string; iOS/Android in `$extensions` |
@@ -108,7 +108,7 @@ Semantic layer names (values unchanged from the previous numeric scale):
 | `modal` | 400 | Dialogs, sheets |
 | `toast` | 500 | Toasts, top-level banners |
 
-In Tamagui / MojaUI codegen, use props like `zIndex="$modal"` (not the old `$0`–`$5` keys).
+Codegen registers **Tamagui** `tokens.zIndex` with the **same keys as `size`** (`$0`, `$4`, …) so `createTamagui` never sees a missing `zIndex` map. For **layout-related** stacking you can use those token props (e.g. `zIndex="$4"`). **Semantic** layers from `zIndex.json` (`base`, `raised`, `modal`, …) are exported separately as the **`zIndex`** object — use numeric values (e.g. `style={{ zIndex: zIndex.modal }}`).
 
 ## How to use
 

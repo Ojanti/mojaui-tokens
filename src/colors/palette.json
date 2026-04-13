@@ -6,39 +6,39 @@
       "$type": "color",
       "$value": "rgba(0,0,0,0)"
     },
-    "neutralWhite": {
+    "whiteBase": {
       "$type": "color",
       "$value": "#FFFFFF"
     },
-    "neutralWhiteAlpha100": {
+    "whiteAlpha30": {
       "$type": "color",
       "$value": "rgba(255,255,255,0.3)"
     },
-    "neutralWhiteAlpha200": {
+    "whiteAlpha60": {
       "$type": "color",
       "$value": "rgba(255,255,255,0.6)"
     },
-    "neutralWhiteAlpha300": {
+    "whiteAlpha75": {
       "$type": "color",
       "$value": "rgba(255,255,255,0.75)"
     },
-    "neutralBlack": {
+    "blackBase": {
       "$type": "color",
       "$value": "#101114"
     },
-    "neutralBlackAbsolute": {
+    "blackAbsolute": {
       "$type": "color",
       "$value": "#000000"
     },
-    "neutralBlackAlpha100": {
+    "blackAlpha30": {
       "$type": "color",
       "$value": "rgba(0,0,0,0.3)"
     },
-    "neutralBlackAlpha200": {
+    "blackAlpha60": {
       "$type": "color",
       "$value": "rgba(0,0,0,0.6)"
     },
-    "neutralBlackAlpha300": {
+    "blackAlpha75": {
       "$type": "color",
       "$value": "rgba(0,0,0,0.75)"
     },
